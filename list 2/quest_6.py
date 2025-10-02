@@ -1,19 +1,4 @@
 import math
-'''
-    Student: Thiago Rodrigo Monteiro Salgado
-    Professor: Dr. Lucas Cordeiro
-
-    Federal University of Amazonas
-
-    Real Time Systems - Master's degree subject
-
-    t code implements periodic task scheduling using algorithms 
-      Rate Monotonic (RM);
-      Deadline Monotonic (DM);
-      Earliest Deadline First (EDF) and; 
-      Least Laxity (LL);
-'''
-
 
 def rate_monotonic(tasks):
     tasks_sorted = sorted(tasks, key=lambda x: x["T"])
@@ -65,6 +50,33 @@ def least_laxity(tasks):
     
     return True
 
+def print_schedule(tasks, algorithm_name):
+    TCP = math.lcm(*[t["T"] for t in tasks]) 
+    schedule = ['Idle' for _ in range(TCP)]
+    
+    tasks_sorted = sorted(tasks, key=lambda x: x["T"] if algorithm_name == "RM" else x["D"])
+    for t in tasks_sorted:
+        t["next_release"] = 0
+        t["remaining"] = 0
+    
+    for time in range(TCP):
+        for t in tasks_sorted:
+            if time == t["next_release"]:
+                t["remaining"] = t["C"]
+                t["next_release"] += t["T"]
+        
+        ready_tasks = [t for t in tasks_sorted if t["remaining"] > 0]
+        if ready_tasks:
+            current = min(ready_tasks, key=lambda x: x["T"] if algorithm_name == "RM" else x["D"])
+            current["remaining"] -= 1
+            executed = f"{current['name']}"
+        else:
+            executed = "Idle"
+
+        schedule[time] = f"{executed}"
+
+    print(f"\nGantt Chart ({algorithm_name}):")
+    print(" --> ".join([f"Time {time}: {task}" for time, task in enumerate(schedule)]))
 
 def main():
     print("Escolha o algoritmo de escalonamento:")
@@ -82,13 +94,17 @@ def main():
     ]
 
     if choice == 1:
-        rate_monotonic(tasks)
+        if rate_monotonic(tasks):
+            print_schedule(tasks, "RM")
     elif choice == 2:
-        deadline_monotonic(tasks)
+        if deadline_monotonic(tasks):
+            print_schedule(tasks, "DM")
     elif choice == 3:
-        earliest_deadline_first(tasks)
+        if earliest_deadline_first(tasks):
+            print_schedule(tasks, "EDF")
     elif choice == 4:
-        least_laxity(tasks)
+        if least_laxity(tasks):
+            print_schedule(tasks, "LL")
     else:
         print("Opção inválida!")
 
