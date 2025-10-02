@@ -11,16 +11,26 @@ import math
     Here the algorithm is rate monotonic. For first we gonna make a test to know if is able to schedule.
 '''
 
-tasks = [
-    {"name": "A", "T": 7, "C": 3, "D": 7},
-    {"name": "B", "T": 12, "C": 2, "D": 12},
-    {"name": "C", "T": 20, "C": 2, "D": 20},
-]
+# # tabela 1
+# tasks = [
+#     {"name": "A", "T": 7, "C": 3, "D": 7},
+#     {"name": "B", "T": 12, "C": 2, "D": 12},
+#     {"name": "C", "T": 20, "C": 2, "D": 20},
+# ]
 
+# # tabela 2
+# tasks = [
+#     {"name": "A", "T": 4, "C": 1, "D": 4},
+#     {"name": "B", "T": 6, "C": 2, "D": 6},
+#     {"name": "C", "T": 10, "C": 3, "D": 7},
+# ]
+
+# tabela 6
 tasks = [
-    {"name": "A", "T": 4, "C": 1, "D": 4},
-    {"name": "B", "T": 6, "C": 2, "D": 6},
-    {"name": "C", "T": 10, "C": 3, "D": 7},
+    {"name": "T1", "T": 10, "C": 3, "D": 10},
+    {"name": "T2", "T": 10, "C": 3, "D": 10},
+    {"name": "T3", "T": 10, "C": 3, "D": 10},
+    {"name": "T4", "T": 100, "C": 2, "D": 100},
 ]
 
 
