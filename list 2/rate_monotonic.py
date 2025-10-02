@@ -8,7 +8,7 @@ import math
 
     Real Time Systems - Master's degree subject
 
-    Here the algorithm is rate monotonic. For first we gonna make a test to know if is able to scale.
+    Here the algorithm is rate monotonic. For first we gonna make a test to know if is able to schedule.
 '''
 
 tasks = [
